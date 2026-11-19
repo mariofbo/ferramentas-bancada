@@ -23,3 +23,27 @@ Scripts de manutenção, reparo e limpeza para suporte técnico em Windows.
 * `ipconfig /flushdns`: Esvazia o cache local de DNS para forçar uma nova consulta aos servidores da operadora/roteador.
 * `netsh winsock reset`: Redefine o catálogo Winsock do Windows para o estado padrão de fábrica, corrigindo conflitos causados por VPNs, proxies ou malwares removidos.
 * `netsh int ip reset`: Reinicia os protocolos TCP/IP da placa de rede, resolvendo falhas de obtenção de IP ou conexão limitada.
+
+---
+
+## 📁 03-diagnostico-hardware (`diagnostico-completo.bat`)
+**Quando usar:** Na chegada ao cliente para levantar especificações técnicas da máquina, verificar saúde de bateria de notebook, saúde S.M.A.R.T. dos discos ou status de ativação do Windows.
+
+* `slmgr.vbs /xpr`: Verifica e exibe se a licença do Windows instalada é permanente ou possui data de expiração.
+* `Get-CimInstance` / `Get-PhysicalDisk` (PowerShell): Consulta modelo da placa-mãe, versão do BIOS, capacidade/frequência das memórias RAM e o status de saúde dos HDs e SSDs.
+* `powercfg /batteryreport`: Gera um relatório HTML na Área de Trabalho comparando a capacidade original de fábrica da bateria com a capacidade atual de carga (em notebooks).
+
+---
+
+## 📁 04-reparo-avancado (`reparo-disco-e-loja.bat`)
+**Quando usar:** Falhas na abertura da Microsoft Store ou aplicativos nativos (Calculadora, Fotos, Menu Iniciar) e suspeita de erros lógicos ou setores defeituosos no disco rígido/SSD.
+
+* `Get-AppxPackage ... Add-AppxPackage` (PowerShell): Reinstala e registra novamente a Microsoft Store e os pacotes de aplicativos nativos do Windows para todos os usuários.
+* `chkdsk C: /f /r /x`: Verifica a integridade do sistema de arquivos, localiza setores defeituosos e agenda o reparo físico/lógico da unidade `C:` para a próxima reinicialização (digite `S` para confirmar o agendamento).
+
+---
+
+## 📁 05-upgrade-win11 (`liberar-upgrade-win11.bat`)
+**Quando usar:** Antes de realizar atualização (In-Place Upgrade) para o Windows 11 em computadores com processadores antigos ou sem chip TPM 2.0, mantendo arquivos e programas.
+
+* `reg add "HKLM\SYSTEM\Setup\MoSetup" ...`: Insere a chave `AllowUpgradesWithUnsupportedTPMOrCPU = 1` no Registro do Windows para ignorar o bloqueio de compatibilidade de CPU e TPM durante a instalação.
